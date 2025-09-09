@@ -66,7 +66,59 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showProductAnalysis, setShowProductAnalysis] = useState(false);
   const [llmAnalyzing, setLlmAnalyzing] = useState(false);
+  const [alertProcessing, setAlertProcessing] = useState<string | null>(null);
+  const [alertResults, setAlertResults] = useState<any>({});
   const chartRef = useRef<any>(null);
+
+  // Funciones para manejar alertas inteligentes
+  const handleAlertAction = async (alertType: string, action: string) => {
+    setAlertProcessing(alertType);
+    
+    // Simular procesamiento LLM
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // Resultados específicos por tipo de alerta
+    const results = {
+      '🚨 Súper Crítico': {
+        processed: 857,
+        resolved: 743,
+        pending: 114,
+        recommendations: [
+          'Reconteo inmediato de productos críticos',
+          'Implementar sistema de alertas automáticas',
+          'Capacitación urgente del personal'
+        ]
+      },
+      '⚡ Súper Rápido': {
+        validated: 85,
+        accuracy: 98.7,
+        timeSaved: '2.3 horas',
+        details: 'Productos validados automáticamente por modelos LLM'
+      },
+      '🧠 LLM Info': {
+        anomalies: 247,
+        patterns: 12,
+        insights: [
+          'Patrón estacional detectado en productos de construcción',
+          'Discrepancia recurrente en zona de almacén B',
+          'Optimización recomendada para productos de alta rotación'
+        ]
+      },
+      '🎯 Súper Éxito': {
+        optimized: 847,
+        efficiency: '+23.4%',
+        savings: '$45,200',
+        optimizations: [
+          'Reducción de stock muerto en 15%',
+          'Mejora en rotación de inventario',
+          'Optimización de espacios de almacenamiento'
+        ]
+      }
+    };
+    
+    setAlertResults(prev => ({ ...prev, [alertType]: results[alertType] }));
+    setAlertProcessing(null);
+  };
 
   // Datos mejorados y más completos del CSV
   const csvData = useMemo(() => {
@@ -1222,28 +1274,32 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
                   message: '857 productos necesitan revisión INMEDIATA con LLM', 
                   icon: AlertTriangle,
                   color: 'red',
-                  action: 'Procesar con LLM'
+                  action: 'Procesar con LLM',
+                  id: 'critical'
                 },
                 { 
                   type: '⚡ Súper Rápido', 
                   message: '85 productos validados automáticamente por LLM', 
                   icon: Zap,
                   color: 'amber',
-                  action: 'Ver detalles LLM'
+                  action: 'Ver detalles LLM',
+                  id: 'fast'
                 },
                 { 
                   type: '🧠 LLM Info', 
                   message: '247 anomalías detectadas por algoritmos avanzados', 
                   icon: Brain,
                   color: 'blue',
-                  action: 'Analizar con LLM'
+                  action: 'Analizar con LLM',
+                  id: 'info'
                 },
                 { 
                   type: '🎯 Súper Éxito', 
                   message: '847 productos optimizados con predicción LLM', 
                   icon: CheckCircle,
                   color: 'emerald',
-                  action: 'Ver optimizaciones'
+                  action: 'Ver optimizaciones',
+                  id: 'success'
                 }
               ].map((alert, index) => (
                 <motion.div 
@@ -1258,8 +1314,26 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
                   <div className="flex-1">
                     <div className={`text-sm font-semibold text-${alert.color}-400 mb-1`}>{alert.type}</div>
                     <div className="text-sm text-slate-300 mb-2">{alert.message}</div>
-                    <Button size="sm" variant="outline" className={`text-xs border-${alert.color}-500/30 text-${alert.color}-400 hover:bg-${alert.color}-500/20`}>
-                      {alert.action}
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      className={`text-xs border-${alert.color}-500/30 text-${alert.color}-400 hover:bg-${alert.color}-500/20`}
+                      onClick={() => handleAlertAction(alert.type, alert.action)}
+                      disabled={alertProcessing === alert.type}
+                    >
+                      {alertProcessing === alert.type ? (
+                        <div className="flex items-center gap-2">
+                          <motion.div
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                          >
+                            <RefreshCw className="w-3 h-3" />
+                          </motion.div>
+                          Procesando...
+                        </div>
+                      ) : (
+                        alert.action
+                      )}
                     </Button>
                   </div>
                   <ChevronRight className={`w-4 h-4 text-${alert.color}-400 group-hover:translate-x-1 transition-transform`} />
@@ -1267,6 +1341,126 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
               ))}
             </CardContent>
           </Card>
+
+          {/* Resultados de Alertas */}
+          {Object.keys(alertResults).length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-6"
+            >
+              <Card className="glass-dark-premium">
+                <CardHeader>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-6 h-6 text-green-400" />
+                    <CardTitle className="text-white">Resultados del Procesamiento LLM</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  {Object.entries(alertResults).map(([alertType, results]: [string, any]) => (
+                    <motion.div
+                      key={alertType}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className="p-4 bg-white/5 rounded-xl border border-white/10"
+                    >
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center">
+                          <CheckCircle className="w-4 h-4 text-green-400" />
+                        </div>
+                        <h4 className="text-lg font-semibold text-white">{alertType}</h4>
+                        <Badge className="bg-green-500/20 text-green-300 border-green-500/30">
+                          Completado
+                        </Badge>
+                      </div>
+
+                      {alertType === '🚨 Súper Crítico' && (
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                          <div className="text-center p-3 bg-red-500/10 rounded-lg">
+                            <div className="text-2xl font-bold text-red-400">{results.processed}</div>
+                            <div className="text-sm text-slate-400">Productos Procesados</div>
+                          </div>
+                          <div className="text-center p-3 bg-green-500/10 rounded-lg">
+                            <div className="text-2xl font-bold text-green-400">{results.resolved}</div>
+                            <div className="text-sm text-slate-400">Resueltos</div>
+                          </div>
+                          <div className="text-center p-3 bg-amber-500/10 rounded-lg">
+                            <div className="text-2xl font-bold text-amber-400">{results.pending}</div>
+                            <div className="text-sm text-slate-400">Pendientes</div>
+                          </div>
+                        </div>
+                      )}
+
+                      {alertType === '⚡ Súper Rápido' && (
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                          <div className="text-center p-3 bg-amber-500/10 rounded-lg">
+                            <div className="text-2xl font-bold text-amber-400">{results.validated}</div>
+                            <div className="text-sm text-slate-400">Productos Validados</div>
+                          </div>
+                          <div className="text-center p-3 bg-green-500/10 rounded-lg">
+                            <div className="text-2xl font-bold text-green-400">{results.accuracy}%</div>
+                            <div className="text-sm text-slate-400">Precisión</div>
+                          </div>
+                          <div className="text-center p-3 bg-blue-500/10 rounded-lg">
+                            <div className="text-2xl font-bold text-blue-400">{results.timeSaved}</div>
+                            <div className="text-sm text-slate-400">Tiempo Ahorrado</div>
+                          </div>
+                        </div>
+                      )}
+
+                      {alertType === '🧠 LLM Info' && (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                          <div className="text-center p-3 bg-blue-500/10 rounded-lg">
+                            <div className="text-2xl font-bold text-blue-400">{results.anomalies}</div>
+                            <div className="text-sm text-slate-400">Anomalías Detectadas</div>
+                          </div>
+                          <div className="text-center p-3 bg-purple-500/10 rounded-lg">
+                            <div className="text-2xl font-bold text-purple-400">{results.patterns}</div>
+                            <div className="text-sm text-slate-400">Patrones Identificados</div>
+                          </div>
+                        </div>
+                      )}
+
+                      {alertType === '🎯 Súper Éxito' && (
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                          <div className="text-center p-3 bg-emerald-500/10 rounded-lg">
+                            <div className="text-2xl font-bold text-emerald-400">{results.optimized}</div>
+                            <div className="text-sm text-slate-400">Productos Optimizados</div>
+                          </div>
+                          <div className="text-center p-3 bg-green-500/10 rounded-lg">
+                            <div className="text-2xl font-bold text-green-400">{results.efficiency}</div>
+                            <div className="text-sm text-slate-400">Mejora de Eficiencia</div>
+                          </div>
+                          <div className="text-center p-3 bg-blue-500/10 rounded-lg">
+                            <div className="text-2xl font-bold text-blue-400">{results.savings}</div>
+                            <div className="text-sm text-slate-400">Ahorro Estimado</div>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Recomendaciones/Insights */}
+                      <div className="mt-4">
+                        <h5 className="text-sm font-semibold text-slate-300 mb-2">
+                          {alertType === '🚨 Súper Crítico' ? 'Recomendaciones:' :
+                           alertType === '⚡ Súper Rápido' ? 'Detalles:' :
+                           alertType === '🧠 LLM Info' ? 'Insights Clave:' :
+                           'Optimizaciones:'}
+                        </h5>
+                        <div className="space-y-2">
+                          {(results.recommendations || results.insights || results.optimizations || [results.details]).map((item: string, idx: number) => (
+                            <div key={idx} className="flex items-start gap-2 text-sm text-slate-300">
+                              <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
+                              <span>{item}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
         </motion.div>
 
         
