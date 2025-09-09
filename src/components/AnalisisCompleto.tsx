@@ -65,7 +65,7 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
   const [chartSpeed, setChartSpeed] = useState(1);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showProductAnalysis, setShowProductAnalysis] = useState(false);
-  const [aiAnalyzing, setAiAnalyzing] = useState(false);
+  const [llmAnalyzing, setLlmAnalyzing] = useState(false);
   const chartRef = useRef<any>(null);
 
   // Datos mejorados y más completos del CSV
@@ -679,7 +679,7 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
 
   const advancedStats = [
     {
-      title: 'PRECISIÓN IA',
+      title: 'PRECISIÓN LLM',
       value: '94.3%',
       change: '+12.5%',
       trend: 'up',
@@ -918,7 +918,7 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
                   </div>
                   <div>
                     <CardTitle className="text-3xl text-white">CENTRO DE VISUALIZACIÓN SÚPER AVANZADO</CardTitle>
-                    <p className="text-purple-300 text-lg">Gráficas inteligentes con IA predictiva</p>
+                    <p className="text-purple-300 text-lg">Gráficas inteligentes con modelos LLM predictivos</p>
                   </div>
                 </div>
                 
@@ -955,7 +955,7 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
                     className="border-amber-500/30 text-amber-300 hover:bg-amber-600/20"
                   >
                     <Lightbulb className="w-4 h-4 mr-2" />
-                    IA Insights
+                    LLM Insights
                   </Button>
                 </div>
               </div>
@@ -1111,7 +1111,7 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
                      '9 zonas térmicas'}
                   </div>
                   <div className="mt-3 p-2 bg-blue-500/20 rounded-lg">
-                    <div className="text-xs text-blue-300 mb-1">Precisión IA:</div>
+                    <div className="text-xs text-blue-300 mb-1">Precisión LLM:</div>
                     <div className="flex items-center gap-2">
                       <div className="flex-1 bg-blue-900/50 rounded-full h-2">
                         <div className="bg-gradient-to-r from-blue-400 to-cyan-400 h-2 rounded-full" style={{width: '94.3%'}}></div>
@@ -1157,7 +1157,7 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
                     >
                       <Brain className="w-4 h-4 text-purple-400" />
                     </motion.div>
-                    <span className="text-purple-300 text-xs">IA procesando...</span>
+                    <span className="text-purple-300 text-xs">LLM procesando...</span>
                   </div>
                 </div>
               </div>
@@ -1219,28 +1219,28 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
               {[
                 { 
                   type: '🚨 Súper Crítico', 
-                  message: '857 productos necesitan revisión INMEDIATA con IA', 
+                  message: '857 productos necesitan revisión INMEDIATA con LLM', 
                   icon: AlertTriangle,
                   color: 'red',
-                  action: 'Procesar con IA'
+                  action: 'Procesar con LLM'
                 },
                 { 
                   type: '⚡ Súper Rápido', 
-                  message: '85 productos validados automáticamente por IA', 
+                  message: '85 productos validados automáticamente por LLM', 
                   icon: Zap,
                   color: 'amber',
-                  action: 'Ver detalles IA'
+                  action: 'Ver detalles LLM'
                 },
                 { 
-                  type: '🧠 IA Info', 
+                  type: '🧠 LLM Info', 
                   message: '247 anomalías detectadas por algoritmos avanzados', 
                   icon: Brain,
                   color: 'blue',
-                  action: 'Analizar patrones'
+                  action: 'Analizar con LLM'
                 },
                 { 
                   type: '🎯 Súper Éxito', 
-                  message: '847 productos optimizados con predicción IA', 
+                  message: '847 productos optimizados con predicción LLM', 
                   icon: CheckCircle,
                   color: 'emerald',
                   action: 'Ver optimizaciones'

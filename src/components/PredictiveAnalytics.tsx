@@ -217,7 +217,7 @@ export function PredictiveAnalytics() {
           </div>
           <div>
             <h2 className="text-2xl font-bold text-white">Análisis Predictivo</h2>
-            <p className="text-slate-300">Forecasting inteligente e insights estratégicos</p>
+            <p className="text-slate-300">Forecasting con modelos LLM propios e insights estratégicos</p>
           </div>
         </div>
 
@@ -411,7 +411,7 @@ export function PredictiveAnalytics() {
                 <Lightbulb className="w-5 h-5 text-yellow-400" />
                 <CardTitle className="text-white">Recomendaciones Estratégicas</CardTitle>
                 <Badge className="bg-green-500/20 text-green-300 border-green-500/30">
-                  IA-Powered
+                  LLM-Powered
                 </Badge>
               </div>
             </CardHeader>
