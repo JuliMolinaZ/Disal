@@ -1020,7 +1020,7 @@ export function GeneralReportDashboard() {
             </div>
             <p className="text-blue-300 text-lg font-semibold">INFORME GERENCIAL CONFIDENCIAL</p>
             <div className="flex items-center justify-center gap-6 text-blue-400 text-sm">
-              <span>© 2024 DISAL</span>
+              <span>© 2025 DISAL</span>
               <span>•</span>
               <span>El Salvador</span>
               <span>•</span>
