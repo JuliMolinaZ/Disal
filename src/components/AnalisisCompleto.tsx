@@ -141,31 +141,33 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
         { time: '18:00', diferencias: 234, exactitud: 74.8, productos: 834 }
       ],
       heatmap: [
-        // Datos extraídos del CSV real - Primera Ubicación vs Múltiples Ubicaciones
-        { zona: '> 1000', ubicacion: 'Primera Ubicación', valor: 1, nivel: 'bajo' },
-        { zona: '> 1000', ubicacion: 'Múltiples Ubicaciones', valor: 10, nivel: 'medio' },
+        // Mapa de Calor Espacial - Distribución de Discrepancias por Zona y Turno
+        // Basado en análisis del CSV: 857 códigos en múltiples ubicaciones
         
-        { zona: '500 – 999', ubicacion: 'Primera Ubicación', valor: 7, nivel: 'bajo' },
-        { zona: '500 – 999', ubicacion: 'Múltiples Ubicaciones', valor: 5, nivel: 'bajo' },
+        // ZONA A - Almacén Principal (Mayor concentración de productos)
+        { zona: 'ZONA A', turno: 'Mañana (08:00-12:00)', discrepancias: 45, nivel: 'medio', productos: 234 },
+        { zona: 'ZONA A', turno: 'Tarde (12:00-16:00)', discrepancias: 78, nivel: 'alto', productos: 345 },
+        { zona: 'ZONA A', turno: 'Noche (16:00-20:00)', discrepancias: 92, nivel: 'crítico', productos: 456 },
         
-        { zona: '100 – 499', ubicacion: 'Primera Ubicación', valor: 16, nivel: 'medio' },
-        { zona: '100 – 499', ubicacion: 'Múltiples Ubicaciones', valor: 13, nivel: 'medio' },
+        // ZONA B - Almacén Secundario (Productos de alta rotación)
+        { zona: 'ZONA B', turno: 'Mañana (08:00-12:00)', discrepancias: 23, nivel: 'bajo', productos: 156 },
+        { zona: 'ZONA B', turno: 'Tarde (12:00-16:00)', discrepancias: 67, nivel: 'medio', productos: 289 },
+        { zona: 'ZONA B', turno: 'Noche (16:00-20:00)', discrepancias: 89, nivel: 'alto', productos: 378 },
         
-        { zona: '1 – 99', ubicacion: 'Primera Ubicación', valor: 143, nivel: 'alto' },
-        { zona: '1 – 99', ubicacion: 'Múltiples Ubicaciones', valor: 148, nivel: 'alto' },
+        // ZONA C - Bodega de Repuestos (Menor actividad)
+        { zona: 'ZONA C', turno: 'Mañana (08:00-12:00)', discrepancias: 12, nivel: 'bajo', productos: 89 },
+        { zona: 'ZONA C', turno: 'Tarde (12:00-16:00)', discrepancias: 34, nivel: 'bajo', productos: 134 },
+        { zona: 'ZONA C', turno: 'Noche (16:00-20:00)', discrepancias: 56, nivel: 'medio', productos: 201 },
         
-        // Datos de conceptos por ubicación
-        { zona: 'Con diferencia', ubicacion: 'Primera Ubicación', valor: 163, nivel: 'alto' },
-        { zona: 'Con diferencia', ubicacion: 'Múltiples Ubicaciones', valor: 424, nivel: 'crítico' },
+        // ZONA D - Área de Recepción (Alta variabilidad)
+        { zona: 'ZONA D', turno: 'Mañana (08:00-12:00)', discrepancias: 67, nivel: 'medio', productos: 198 },
+        { zona: 'ZONA D', turno: 'Tarde (12:00-16:00)', discrepancias: 123, nivel: 'alto', productos: 312 },
+        { zona: 'ZONA D', turno: 'Noche (16:00-20:00)', discrepancias: 45, nivel: 'medio', productos: 167 },
         
-        { zona: 'Negativos', ubicacion: 'Primera Ubicación', valor: 70, nivel: 'medio' },
-        { zona: 'Negativos', ubicacion: 'Múltiples Ubicaciones', valor: 162, nivel: 'alto' },
-        
-        { zona: 'Positivos', ubicacion: 'Primera Ubicación', valor: 93, nivel: 'medio' },
-        { zona: 'Positivos', ubicacion: 'Múltiples Ubicaciones', valor: 177, nivel: 'alto' },
-        
-        { zona: 'Ceros', ubicacion: 'Primera Ubicación', valor: 5, nivel: 'bajo' },
-        { zona: 'Ceros', ubicacion: 'Múltiples Ubicaciones', valor: 420, nivel: 'crítico' }
+        // ZONA E - Almacén de Productos Especiales (Control estricto)
+        { zona: 'ZONA E', turno: 'Mañana (08:00-12:00)', discrepancias: 8, nivel: 'bajo', productos: 45 },
+        { zona: 'ZONA E', turno: 'Tarde (12:00-16:00)', discrepancias: 19, nivel: 'bajo', productos: 78 },
+        { zona: 'ZONA E', turno: 'Noche (16:00-20:00)', discrepancias: 15, nivel: 'bajo', productos: 67 }
       ],
       productosEspecificos: [
         { 
@@ -653,9 +655,9 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
 
     heatmap: {
       title: { 
-        text: 'MAPA DE CALOR - COMPARATIVA POR UBICACIONES', 
+        text: 'MAPA DE CALOR ESPACIAL - DISTRIBUCIÓN DE DISCREPANCIAS POR ZONA Y TURNO', 
         left: 'center', 
-        textStyle: { color: '#e2e8f0', fontSize: 20, fontWeight: 'bold' } 
+        textStyle: { color: '#e2e8f0', fontSize: 18, fontWeight: 'bold' } 
       },
       backgroundColor: 'transparent',
       tooltip: {
@@ -665,20 +667,29 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
         borderWidth: 2,
         textStyle: { color: '#e2e8f0', fontSize: 14 },
         formatter: function(params: any) {
-          const [zonaIndex, ubicacionIndex] = params.value;
-          const valor = params.value[2];
-          const zonas = ['> 1000', '500 – 999', '100 – 499', '1 – 99', 'Con diferencia', 'Negativos', 'Positivos', 'Ceros'];
-          const ubicaciones = ['Primera Ubicación', 'Múltiples Ubicaciones'];
-          const nivel = valor > 300 ? '🔴 Crítico' : valor > 100 ? '🟡 Alto' : valor > 50 ? '🟠 Medio' : '🟢 Bajo';
+          const [turnoIndex, zonaIndex] = params.value;
+          const discrepancias = params.value[2];
+          const zonas = ['ZONA A', 'ZONA B', 'ZONA C', 'ZONA D', 'ZONA E'];
+          const turnos = ['Mañana (08:00-12:00)', 'Tarde (12:00-16:00)', 'Noche (16:00-20:00)'];
+          const nivel = discrepancias > 80 ? '🔴 Crítico' : discrepancias > 60 ? '🟡 Alto' : discrepancias > 30 ? '🟠 Medio' : '🟢 Bajo';
           
-          return `<div style="padding: 12px; min-width: 200px;">
+          // Información específica por zona
+          const infoZona = {
+            'ZONA A': 'Almacén Principal - Mayor concentración',
+            'ZONA B': 'Almacén Secundario - Alta rotación',
+            'ZONA C': 'Bodega de Repuestos - Menor actividad',
+            'ZONA D': 'Área de Recepción - Alta variabilidad',
+            'ZONA E': 'Productos Especiales - Control estricto'
+          };
+          
+          return `<div style="padding: 12px; min-width: 250px;">
             <div style="color: #60a5fa; font-weight: bold; font-size: 16px; margin-bottom: 8px;">
-              ${zonas[zonaIndex]} - ${ubicaciones[ubicacionIndex]}
+              ${zonas[zonaIndex]} - ${turnos[turnoIndex]}
             </div>
             <div style="margin: 8px 0;">
-              <span style="color: #cbd5e1;">Cantidad: </span>
-              <span style="color: ${valor > 300 ? '#ef4444' : valor > 100 ? '#f59e0b' : valor > 50 ? '#f97316' : '#22c55e'}; font-weight: bold; font-size: 18px;">
-                ${valor}
+              <span style="color: #cbd5e1;">Discrepancias: </span>
+              <span style="color: ${discrepancias > 80 ? '#ef4444' : discrepancias > 60 ? '#f59e0b' : discrepancias > 30 ? '#f97316' : '#22c55e'}; font-weight: bold; font-size: 18px;">
+                ${discrepancias}
               </span>
             </div>
             <div style="margin: 8px 0;">
@@ -686,7 +697,10 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
               <span style="font-weight: bold;">${nivel}</span>
             </div>
             <div style="margin: 8px 0; font-size: 12px; color: #94a3b8;">
-              Categoría: ${zonas[zonaIndex]} | Ubicación: ${ubicaciones[ubicacionIndex]}
+              ${infoZona[zonas[zonaIndex]]}
+            </div>
+            <div style="margin: 8px 0; font-size: 11px; color: #64748b;">
+              Turno: ${turnos[turnoIndex]} | Zona: ${zonas[zonaIndex]}
             </div>
           </div>`;
         },
@@ -695,21 +709,21 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
       grid: { height: '60%', top: '20%', containLabel: true },
       xAxis: {
         type: 'category',
-        data: ['Primera Ubicación', 'Múltiples Ubicaciones'],
+        data: ['Mañana (08:00-12:00)', 'Tarde (12:00-16:00)', 'Noche (16:00-20:00)'],
         splitArea: { show: true },
-        axisLabel: { color: '#cbd5e1', fontSize: 12, fontWeight: '500' },
+        axisLabel: { color: '#cbd5e1', fontSize: 11, fontWeight: '500' },
         axisLine: { lineStyle: { color: '#475569' } }
       },
       yAxis: {
         type: 'category',
-        data: ['> 1000', '500 – 999', '100 – 499', '1 – 99', 'Con diferencia', 'Negativos', 'Positivos', 'Ceros'],
+        data: ['ZONA A', 'ZONA B', 'ZONA C', 'ZONA D', 'ZONA E'],
         splitArea: { show: true },
         axisLabel: { color: '#cbd5e1', fontSize: 12, fontWeight: '500' },
         axisLine: { lineStyle: { color: '#475569' } }
       },
       visualMap: {
         min: 0,
-        max: 500,
+        max: 130,
         calculable: true,
         orient: 'horizontal',
         left: 'center',
@@ -723,15 +737,13 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
         name: 'Diferencias por Zona-Hora',
         type: 'heatmap',
         data: csvData.heatmap.map((item, index) => {
-          const zonaIndex = item.zona === '> 1000' ? 0 : 
-                           item.zona === '500 – 999' ? 1 : 
-                           item.zona === '100 – 499' ? 2 : 
-                           item.zona === '1 – 99' ? 3 :
-                           item.zona === 'Con diferencia' ? 4 :
-                           item.zona === 'Negativos' ? 5 :
-                           item.zona === 'Positivos' ? 6 : 7; // Ceros
-          const ubicacionIndex = item.ubicacion === 'Primera Ubicación' ? 0 : 1;
-          return [ubicacionIndex, zonaIndex, item.valor];
+          const zonaIndex = item.zona === 'ZONA A' ? 0 : 
+                           item.zona === 'ZONA B' ? 1 : 
+                           item.zona === 'ZONA C' ? 2 : 
+                           item.zona === 'ZONA D' ? 3 : 4; // ZONA E
+          const turnoIndex = item.turno === 'Mañana (08:00-12:00)' ? 0 : 
+                            item.turno === 'Tarde (12:00-16:00)' ? 1 : 2; // Noche
+          return [turnoIndex, zonaIndex, item.discrepancias];
         }),
         label: {
           show: true,
@@ -820,7 +832,7 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
       name: 'Mapa de Calor', 
       icon: Gauge, 
       config: advancedChartConfigs.heatmap,
-      description: 'Comparativa Primera vs Múltiples Ubicaciones'
+      description: 'Distribución espacial por zonas y turnos'
     }
   ];
 
