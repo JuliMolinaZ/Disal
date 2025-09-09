@@ -141,30 +141,31 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
         { time: '18:00', diferencias: 234, exactitud: 74.8, productos: 834 }
       ],
       heatmap: [
-        // Zona de Ferretería - Mayor actividad por la mañana
-        { zona: 'FERRETERÍA', hora: '08:00', valor: 45, nivel: 'medio' },
-        { zona: 'FERRETERÍA', hora: '12:00', valor: 78, nivel: 'alto' },
-        { zona: 'FERRETERÍA', hora: '16:00', valor: 92, nivel: 'crítico' },
+        // Datos extraídos del CSV real - Primera Ubicación vs Múltiples Ubicaciones
+        { zona: '> 1000', ubicacion: 'Primera Ubicación', valor: 1, nivel: 'bajo' },
+        { zona: '> 1000', ubicacion: 'Múltiples Ubicaciones', valor: 10, nivel: 'medio' },
         
-        // Zona Eléctrica - Pico al mediodía
-        { zona: 'ELÉCTRICO', hora: '08:00', valor: 23, nivel: 'bajo' },
-        { zona: 'ELÉCTRICO', hora: '12:00', valor: 89, nivel: 'alto' },
-        { zona: 'ELÉCTRICO', hora: '16:00', valor: 67, nivel: 'medio' },
+        { zona: '500 – 999', ubicacion: 'Primera Ubicación', valor: 7, nivel: 'bajo' },
+        { zona: '500 – 999', ubicacion: 'Múltiples Ubicaciones', valor: 5, nivel: 'bajo' },
         
-        // Zona de Pinturas - Actividad constante
-        { zona: 'PINTURAS', hora: '08:00', valor: 34, nivel: 'bajo' },
-        { zona: 'PINTURAS', hora: '12:00', valor: 56, nivel: 'medio' },
-        { zona: 'PINTURAS', hora: '16:00', valor: 45, nivel: 'medio' },
+        { zona: '100 – 499', ubicacion: 'Primera Ubicación', valor: 16, nivel: 'medio' },
+        { zona: '100 – 499', ubicacion: 'Múltiples Ubicaciones', valor: 13, nivel: 'medio' },
         
-        // Zona de Plomería - Menor actividad
-        { zona: 'PLOMERÍA', hora: '08:00', valor: 12, nivel: 'bajo' },
-        { zona: 'PLOMERÍA', hora: '12:00', valor: 28, nivel: 'bajo' },
-        { zona: 'PLOMERÍA', hora: '16:00', valor: 35, nivel: 'bajo' },
+        { zona: '1 – 99', ubicacion: 'Primera Ubicación', valor: 143, nivel: 'alto' },
+        { zona: '1 – 99', ubicacion: 'Múltiples Ubicaciones', valor: 148, nivel: 'alto' },
         
-        // Zona de Construcción - Alta actividad vespertina
-        { zona: 'CONSTRUCCIÓN', hora: '08:00', valor: 18, nivel: 'bajo' },
-        { zona: 'CONSTRUCCIÓN', hora: '12:00', valor: 42, nivel: 'medio' },
-        { zona: 'CONSTRUCCIÓN', hora: '16:00', valor: 73, nivel: 'alto' }
+        // Datos de conceptos por ubicación
+        { zona: 'Con diferencia', ubicacion: 'Primera Ubicación', valor: 163, nivel: 'alto' },
+        { zona: 'Con diferencia', ubicacion: 'Múltiples Ubicaciones', valor: 424, nivel: 'crítico' },
+        
+        { zona: 'Negativos', ubicacion: 'Primera Ubicación', valor: 70, nivel: 'medio' },
+        { zona: 'Negativos', ubicacion: 'Múltiples Ubicaciones', valor: 162, nivel: 'alto' },
+        
+        { zona: 'Positivos', ubicacion: 'Primera Ubicación', valor: 93, nivel: 'medio' },
+        { zona: 'Positivos', ubicacion: 'Múltiples Ubicaciones', valor: 177, nivel: 'alto' },
+        
+        { zona: 'Ceros', ubicacion: 'Primera Ubicación', valor: 5, nivel: 'bajo' },
+        { zona: 'Ceros', ubicacion: 'Múltiples Ubicaciones', valor: 420, nivel: 'crítico' }
       ],
       productosEspecificos: [
         { 
@@ -652,7 +653,7 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
 
     heatmap: {
       title: { 
-        text: 'MAPA DE CALOR POR ZONAS DE ALMACÉN DISAL', 
+        text: 'MAPA DE CALOR - COMPARATIVA POR UBICACIONES', 
         left: 'center', 
         textStyle: { color: '#e2e8f0', fontSize: 20, fontWeight: 'bold' } 
       },
@@ -664,19 +665,19 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
         borderWidth: 2,
         textStyle: { color: '#e2e8f0', fontSize: 14 },
         formatter: function(params: any) {
-          const [zonaIndex, horaIndex] = params.value;
+          const [zonaIndex, ubicacionIndex] = params.value;
           const valor = params.value[2];
-          const zonas = ['CONSTRUCCIÓN', 'PLOMERÍA', 'PINTURAS', 'ELÉCTRICO', 'FERRETERÍA'];
-          const horas = ['08:00', '12:00', '16:00'];
-          const nivel = valor > 80 ? '🔴 Crítico' : valor > 60 ? '🟡 Alto' : valor > 30 ? '🟠 Medio' : '🟢 Bajo';
+          const zonas = ['> 1000', '500 – 999', '100 – 499', '1 – 99', 'Con diferencia', 'Negativos', 'Positivos', 'Ceros'];
+          const ubicaciones = ['Primera Ubicación', 'Múltiples Ubicaciones'];
+          const nivel = valor > 300 ? '🔴 Crítico' : valor > 100 ? '🟡 Alto' : valor > 50 ? '🟠 Medio' : '🟢 Bajo';
           
           return `<div style="padding: 12px; min-width: 200px;">
             <div style="color: #60a5fa; font-weight: bold; font-size: 16px; margin-bottom: 8px;">
-              ${zonas[zonaIndex]} - ${horas[horaIndex]}
+              ${zonas[zonaIndex]} - ${ubicaciones[ubicacionIndex]}
             </div>
             <div style="margin: 8px 0;">
-              <span style="color: #cbd5e1;">Diferencias: </span>
-              <span style="color: ${valor > 80 ? '#ef4444' : valor > 60 ? '#f59e0b' : valor > 30 ? '#f97316' : '#22c55e'}; font-weight: bold; font-size: 18px;">
+              <span style="color: #cbd5e1;">Cantidad: </span>
+              <span style="color: ${valor > 300 ? '#ef4444' : valor > 100 ? '#f59e0b' : valor > 50 ? '#f97316' : '#22c55e'}; font-weight: bold; font-size: 18px;">
                 ${valor}
               </span>
             </div>
@@ -685,7 +686,7 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
               <span style="font-weight: bold;">${nivel}</span>
             </div>
             <div style="margin: 8px 0; font-size: 12px; color: #94a3b8;">
-              Zona: ${zonas[zonaIndex]} | Hora: ${horas[horaIndex]}
+              Categoría: ${zonas[zonaIndex]} | Ubicación: ${ubicaciones[ubicacionIndex]}
             </div>
           </div>`;
         },
@@ -694,21 +695,21 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
       grid: { height: '60%', top: '20%', containLabel: true },
       xAxis: {
         type: 'category',
-        data: ['08:00', '12:00', '16:00'],
+        data: ['Primera Ubicación', 'Múltiples Ubicaciones'],
         splitArea: { show: true },
         axisLabel: { color: '#cbd5e1', fontSize: 12, fontWeight: '500' },
         axisLine: { lineStyle: { color: '#475569' } }
       },
       yAxis: {
         type: 'category',
-        data: ['CONSTRUCCIÓN', 'PLOMERÍA', 'PINTURAS', 'ELÉCTRICO', 'FERRETERÍA'],
+        data: ['> 1000', '500 – 999', '100 – 499', '1 – 99', 'Con diferencia', 'Negativos', 'Positivos', 'Ceros'],
         splitArea: { show: true },
         axisLabel: { color: '#cbd5e1', fontSize: 12, fontWeight: '500' },
         axisLine: { lineStyle: { color: '#475569' } }
       },
       visualMap: {
         min: 0,
-        max: 100,
+        max: 500,
         calculable: true,
         orient: 'horizontal',
         left: 'center',
@@ -722,12 +723,15 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
         name: 'Diferencias por Zona-Hora',
         type: 'heatmap',
         data: csvData.heatmap.map((item, index) => {
-          const zonaIndex = item.zona === 'FERRETERÍA' ? 4 : 
-                           item.zona === 'ELÉCTRICO' ? 3 : 
-                           item.zona === 'PINTURAS' ? 2 : 
-                           item.zona === 'PLOMERÍA' ? 1 : 0; // CONSTRUCCIÓN
-          const horaIndex = item.hora === '08:00' ? 0 : item.hora === '12:00' ? 1 : 2;
-          return [horaIndex, zonaIndex, item.valor];
+          const zonaIndex = item.zona === '> 1000' ? 0 : 
+                           item.zona === '500 – 999' ? 1 : 
+                           item.zona === '100 – 499' ? 2 : 
+                           item.zona === '1 – 99' ? 3 :
+                           item.zona === 'Con diferencia' ? 4 :
+                           item.zona === 'Negativos' ? 5 :
+                           item.zona === 'Positivos' ? 6 : 7; // Ceros
+          const ubicacionIndex = item.ubicacion === 'Primera Ubicación' ? 0 : 1;
+          return [ubicacionIndex, zonaIndex, item.valor];
         }),
         label: {
           show: true,
@@ -816,7 +820,7 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
       name: 'Mapa de Calor', 
       icon: Gauge, 
       config: advancedChartConfigs.heatmap,
-      description: 'Análisis por zonas de almacén DISAL'
+      description: 'Comparativa Primera vs Múltiples Ubicaciones'
     }
   ];
 
