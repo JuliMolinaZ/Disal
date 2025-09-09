@@ -1,0 +1,8 @@
+,,,,,,,,,,
+Rangos,Cantidad,,Concepto,Cantidades,,Rangos,Cantidades,,Concepto,Cantidades
+> 1000,1,,"Con diferencia (≠ 0 o no numérico, excluye vacíos)",163,,> 1000,10,,"Codigos contados en distintas ubicaciones, la mayoria de productos se localizaban en mas de una ubicacion. ",857
+500 – 999,7,,Negativos (solo números < 0),70,,500 – 999,5,,"Con diferencia (≠ 0 o no numérico, excluye vacíos)",424
+100 – 499,16,,Positivos (solo números > 0),93,,100 – 499,13,,Negativos (solo números < 0),162
+1 – 99,143,,Ceros (solo números = 0),5,,1 – 99,148,,Positivos (solo números > 0),177
+,,,,,,,,,Ceros (solo números = 0),420
+,,,,,,,,,Validar conteo,85

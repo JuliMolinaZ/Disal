@@ -1,11 +1,11 @@
 import { Dashboard } from '@/components/Dashboard';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
 export default function Home() {
-  // Datos mockeados para evitar errores de archivos CSV en Vercel
-  const csvData = `concepto,ubicacion,cantidad
-Producto A,Zona 1,100
-Producto B,Zona 2,150
-Producto C,Zona 3,200`;
+  // Leer el archivo CSV desde la carpeta public
+  const csvPath = join(process.cwd(), 'public', 'GraficasFinales - General.csv');
+  const csvData = readFileSync(csvPath, 'utf-8');
 
   return (
     <main className="min-h-screen">
