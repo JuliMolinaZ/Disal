@@ -79,36 +79,32 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
     
     // Resultados específicos por tipo de alerta
     const results = {
-      '🚨 Súper Crítico': {
-        processed: 857,
-        resolved: 743,
-        pending: 114,
-        recommendations: [
-          'Reconteo inmediato de productos críticos',
-          'Implementar sistema de alertas automáticas',
-          'Capacitación urgente del personal'
-        ]
-      },
-      '⚡ Súper Rápido': {
-        validated: 85,
-        accuracy: 98.7,
-        timeSaved: '2.3 horas',
-        details: 'Productos validados automáticamente por modelos LLM'
-      },
-      '🧠 LLM Info': {
-        anomalies: 247,
-        patterns: 12,
+      'ANÁLISIS GENERAL': {
+        summary: {
+          totalProcessed: 2036,
+          criticalItems: 857,
+          validatedItems: 85,
+          anomaliesDetected: 247,
+          optimizedItems: 847
+        },
+        metrics: {
+          accuracy: 96.8,
+          efficiency: '+23.4%',
+          timeSaved: '4.7 horas',
+          costSavings: '$45,200',
+          riskReduction: '78%'
+        },
         insights: [
           'Patrón estacional detectado en productos de construcción',
           'Discrepancia recurrente en zona de almacén B',
-          'Optimización recomendada para productos de alta rotación'
-        ]
-      },
-      '🎯 Súper Éxito': {
-        optimized: 847,
-        efficiency: '+23.4%',
-        savings: '$45,200',
-        optimizations: [
+          'Optimización recomendada para productos de alta rotación',
+          'Reconteo inmediato requerido para productos críticos',
+          'Implementar sistema de alertas automáticas'
+        ],
+        recommendations: [
+          'Reconteo inmediato de productos críticos',
+          'Implementar sistema de alertas automáticas',
+          'Capacitación urgente del personal',
           'Reducción de stock muerto en 15%',
           'Mejora en rotación de inventario',
           'Optimización de espacios de almacenamiento'
@@ -1268,197 +1264,300 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              {[
-                { 
-                  type: '🚨 Súper Crítico', 
-                  message: '857 productos necesitan revisión INMEDIATA con LLM', 
-                  icon: AlertTriangle,
-                  color: 'red',
-                  action: 'Procesar con LLM',
-                  id: 'critical'
-                },
-                { 
-                  type: '⚡ Súper Rápido', 
-                  message: '85 productos validados automáticamente por LLM', 
-                  icon: Zap,
-                  color: 'amber',
-                  action: 'Ver detalles LLM',
-                  id: 'fast'
-                },
-                { 
-                  type: '🧠 LLM Info', 
-                  message: '247 anomalías detectadas por algoritmos avanzados', 
-                  icon: Brain,
-                  color: 'blue',
-                  action: 'Analizar con LLM',
-                  id: 'info'
-                },
-                { 
-                  type: '🎯 Súper Éxito', 
-                  message: '847 productos optimizados con predicción LLM', 
-                  icon: CheckCircle,
-                  color: 'emerald',
-                  action: 'Ver optimizaciones',
-                  id: 'success'
-                }
-              ].map((alert, index) => (
+              {/* Resumen de Alertas */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                 <motion.div 
-                  key={alert.type}
-                  className={`group flex items-start gap-3 p-4 bg-${alert.color}-500/10 border border-${alert.color}-500/20 rounded-xl hover:bg-${alert.color}-500/20 transition-colors cursor-pointer`}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 2.1 + index * 0.1 }}
-                  whileHover={{ x: -5, scale: 1.02 }}
+                  className="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/20 rounded-xl"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 2.1 }}
                 >
-                  <alert.icon className={`w-5 h-5 text-${alert.color}-400 flex-shrink-0 mt-0.5`} />
-                  <div className="flex-1">
-                    <div className={`text-sm font-semibold text-${alert.color}-400 mb-1`}>{alert.type}</div>
-                    <div className="text-sm text-slate-300 mb-2">{alert.message}</div>
-                    <Button 
-                      size="sm" 
-                      variant="outline" 
-                      className={`text-xs border-${alert.color}-500/30 text-${alert.color}-400 hover:bg-${alert.color}-500/20`}
-                      onClick={() => handleAlertAction(alert.type, alert.action)}
-                      disabled={alertProcessing === alert.type}
-                    >
-                      {alertProcessing === alert.type ? (
-                        <div className="flex items-center gap-2">
-                          <motion.div
-                            animate={{ rotate: 360 }}
-                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                          >
-                            <RefreshCw className="w-3 h-3" />
-                          </motion.div>
-                          Procesando...
-                        </div>
-                      ) : (
-                        alert.action
-                      )}
-                    </Button>
+                  <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0" />
+                  <div>
+                    <div className="text-sm font-semibold text-red-400">🚨 Súper Crítico</div>
+                    <div className="text-xs text-slate-300">857 productos</div>
                   </div>
-                  <ChevronRight className={`w-4 h-4 text-${alert.color}-400 group-hover:translate-x-1 transition-transform`} />
                 </motion.div>
-              ))}
+
+                <motion.div 
+                  className="flex items-center gap-3 p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 2.2 }}
+                >
+                  <Zap className="w-5 h-5 text-amber-400 flex-shrink-0" />
+                  <div>
+                    <div className="text-sm font-semibold text-amber-400">⚡ Súper Rápido</div>
+                    <div className="text-xs text-slate-300">85 productos</div>
+                  </div>
+                </motion.div>
+
+                <motion.div 
+                  className="flex items-center gap-3 p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 2.3 }}
+                >
+                  <Brain className="w-5 h-5 text-blue-400 flex-shrink-0" />
+                  <div>
+                    <div className="text-sm font-semibold text-blue-400">🧠 LLM Info</div>
+                    <div className="text-xs text-slate-300">247 anomalías</div>
+                  </div>
+                </motion.div>
+
+                <motion.div 
+                  className="flex items-center gap-3 p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 2.4 }}
+                >
+                  <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+                  <div>
+                    <div className="text-sm font-semibold text-emerald-400">🎯 Súper Éxito</div>
+                    <div className="text-xs text-slate-300">847 productos</div>
+                  </div>
+                </motion.div>
+              </div>
+
+              {/* Botón de Análisis General */}
+              <motion.div 
+                className="flex justify-center"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 2.5 }}
+              >
+                <Button 
+                  size="lg"
+                  className="bg-gradient-to-r from-purple-600 via-blue-600 to-emerald-600 hover:from-purple-700 hover:via-blue-700 hover:to-emerald-700 text-white font-bold px-8 py-4 rounded-xl shadow-2xl transform hover:scale-105 transition-all duration-300"
+                  onClick={() => handleAlertAction('ANÁLISIS GENERAL', 'Ejecutar Análisis Completo')}
+                  disabled={alertProcessing === 'ANÁLISIS GENERAL'}
+                >
+                  {alertProcessing === 'ANÁLISIS GENERAL' ? (
+                    <div className="flex items-center gap-3">
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      >
+                        <RefreshCw className="w-5 h-5" />
+                      </motion.div>
+                      <span>Procesando con LLM...</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-3">
+                      <Brain className="w-5 h-5" />
+                      <span>🚀 EJECUTAR ANÁLISIS GENERAL CON LLM</span>
+                      <Sparkles className="w-5 h-5" />
+                    </div>
+                  )}
+                </Button>
+              </motion.div>
             </CardContent>
           </Card>
 
-          {/* Resultados de Alertas */}
+          {/* Resultados del Análisis General */}
           {Object.keys(alertResults).length > 0 && (
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mt-6"
+              transition={{ duration: 0.8 }}
+              className="mt-8"
             >
-              <Card className="glass-dark-premium">
-                <CardHeader>
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="w-6 h-6 text-green-400" />
-                    <CardTitle className="text-white">Resultados del Procesamiento LLM</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  {Object.entries(alertResults).map(([alertType, results]: [string, any]) => (
+              {/* Header de Resultados */}
+              <motion.div 
+                className="text-center mb-8"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 }}
+              >
+                <div className="inline-flex items-center gap-3 bg-gradient-to-r from-green-500/20 to-emerald-500/20 px-6 py-3 rounded-full border border-green-500/30 mb-4">
+                  <CheckCircle className="w-6 h-6 text-green-400" />
+                  <span className="text-green-300 font-semibold">ANÁLISIS COMPLETADO</span>
+                  <Badge className="bg-green-500/20 text-green-300 border-green-500/30">
+                    LLM Powered
+                  </Badge>
+                </div>
+                <h3 className="text-3xl font-bold text-white mb-2">Resultados del Análisis General</h3>
+                <p className="text-slate-400">Procesamiento inteligente completado con modelos LLM propios de DISAL</p>
+              </motion.div>
+
+              {/* Métricas Principales */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+                {Object.entries(alertResults).map(([alertType, results]: [string, any]) => (
+                  <React.Fragment key={alertType}>
                     <motion.div
-                      key={alertType}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      className="p-4 bg-white/5 rounded-xl border border-white/10"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 }}
+                      className="text-center p-6 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-2xl border border-blue-500/20"
                     >
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center">
-                          <CheckCircle className="w-4 h-4 text-green-400" />
-                        </div>
-                        <h4 className="text-lg font-semibold text-white">{alertType}</h4>
-                        <Badge className="bg-green-500/20 text-green-300 border-green-500/30">
-                          Completado
-                        </Badge>
-                      </div>
-
-                      {alertType === '🚨 Súper Crítico' && (
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                          <div className="text-center p-3 bg-red-500/10 rounded-lg">
-                            <div className="text-2xl font-bold text-red-400">{results.processed}</div>
-                            <div className="text-sm text-slate-400">Productos Procesados</div>
-                          </div>
-                          <div className="text-center p-3 bg-green-500/10 rounded-lg">
-                            <div className="text-2xl font-bold text-green-400">{results.resolved}</div>
-                            <div className="text-sm text-slate-400">Resueltos</div>
-                          </div>
-                          <div className="text-center p-3 bg-amber-500/10 rounded-lg">
-                            <div className="text-2xl font-bold text-amber-400">{results.pending}</div>
-                            <div className="text-sm text-slate-400">Pendientes</div>
-                          </div>
-                        </div>
-                      )}
-
-                      {alertType === '⚡ Súper Rápido' && (
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                          <div className="text-center p-3 bg-amber-500/10 rounded-lg">
-                            <div className="text-2xl font-bold text-amber-400">{results.validated}</div>
-                            <div className="text-sm text-slate-400">Productos Validados</div>
-                          </div>
-                          <div className="text-center p-3 bg-green-500/10 rounded-lg">
-                            <div className="text-2xl font-bold text-green-400">{results.accuracy}%</div>
-                            <div className="text-sm text-slate-400">Precisión</div>
-                          </div>
-                          <div className="text-center p-3 bg-blue-500/10 rounded-lg">
-                            <div className="text-2xl font-bold text-blue-400">{results.timeSaved}</div>
-                            <div className="text-sm text-slate-400">Tiempo Ahorrado</div>
-                          </div>
-                        </div>
-                      )}
-
-                      {alertType === '🧠 LLM Info' && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                          <div className="text-center p-3 bg-blue-500/10 rounded-lg">
-                            <div className="text-2xl font-bold text-blue-400">{results.anomalies}</div>
-                            <div className="text-sm text-slate-400">Anomalías Detectadas</div>
-                          </div>
-                          <div className="text-center p-3 bg-purple-500/10 rounded-lg">
-                            <div className="text-2xl font-bold text-purple-400">{results.patterns}</div>
-                            <div className="text-sm text-slate-400">Patrones Identificados</div>
-                          </div>
-                        </div>
-                      )}
-
-                      {alertType === '🎯 Súper Éxito' && (
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                          <div className="text-center p-3 bg-emerald-500/10 rounded-lg">
-                            <div className="text-2xl font-bold text-emerald-400">{results.optimized}</div>
-                            <div className="text-sm text-slate-400">Productos Optimizados</div>
-                          </div>
-                          <div className="text-center p-3 bg-green-500/10 rounded-lg">
-                            <div className="text-2xl font-bold text-green-400">{results.efficiency}</div>
-                            <div className="text-sm text-slate-400">Mejora de Eficiencia</div>
-                          </div>
-                          <div className="text-center p-3 bg-blue-500/10 rounded-lg">
-                            <div className="text-2xl font-bold text-blue-400">{results.savings}</div>
-                            <div className="text-sm text-slate-400">Ahorro Estimado</div>
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Recomendaciones/Insights */}
-                      <div className="mt-4">
-                        <h5 className="text-sm font-semibold text-slate-300 mb-2">
-                          {alertType === '🚨 Súper Crítico' ? 'Recomendaciones:' :
-                           alertType === '⚡ Súper Rápido' ? 'Detalles:' :
-                           alertType === '🧠 LLM Info' ? 'Insights Clave:' :
-                           'Optimizaciones:'}
-                        </h5>
-                        <div className="space-y-2">
-                          {(results.recommendations || results.insights || results.optimizations || [results.details]).map((item: string, idx: number) => (
-                            <div key={idx} className="flex items-start gap-2 text-sm text-slate-300">
-                              <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
-                              <span>{item}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
+                      <div className="text-3xl font-bold text-blue-400 mb-2">{results?.summary?.totalProcessed || 2036}</div>
+                      <div className="text-sm text-slate-300">Total Procesados</div>
                     </motion.div>
-                  ))}
-                </CardContent>
-              </Card>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 }}
+                      className="text-center p-6 bg-gradient-to-br from-red-500/10 to-pink-500/10 rounded-2xl border border-red-500/20"
+                    >
+                      <div className="text-3xl font-bold text-red-400 mb-2">{results?.summary?.criticalItems || 857}</div>
+                      <div className="text-sm text-slate-300">Items Críticos</div>
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
+                      className="text-center p-6 bg-gradient-to-br from-amber-500/10 to-yellow-500/10 rounded-2xl border border-amber-500/20"
+                    >
+                      <div className="text-3xl font-bold text-amber-400 mb-2">{results?.summary?.validatedItems || 85}</div>
+                      <div className="text-sm text-slate-300">Validados</div>
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.6 }}
+                      className="text-center p-6 bg-gradient-to-br from-purple-500/10 to-indigo-500/10 rounded-2xl border border-purple-500/20"
+                    >
+                      <div className="text-3xl font-bold text-purple-400 mb-2">{results?.summary?.anomaliesDetected || 247}</div>
+                      <div className="text-sm text-slate-300">Anomalías</div>
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.7 }}
+                      className="text-center p-6 bg-gradient-to-br from-emerald-500/10 to-green-500/10 rounded-2xl border border-emerald-500/20"
+                    >
+                      <div className="text-3xl font-bold text-emerald-400 mb-2">{results?.summary?.optimizedItems || 847}</div>
+                      <div className="text-sm text-slate-300">Optimizados</div>
+                    </motion.div>
+                  </React.Fragment>
+                ))}
+              </div>
+
+              {/* Métricas de Rendimiento */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+                {Object.entries(alertResults).map(([alertType, results]: [string, any]) => (
+                  <React.Fragment key={alertType}>
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.8 }}
+                      className="text-center p-6 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-2xl border border-green-500/20"
+                    >
+                      <div className="text-2xl font-bold text-green-400 mb-2">{results?.metrics?.accuracy || 96.8}%</div>
+                      <div className="text-sm text-slate-300">Precisión</div>
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.9 }}
+                      className="text-center p-6 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-2xl border border-blue-500/20"
+                    >
+                      <div className="text-2xl font-bold text-blue-400 mb-2">{results?.metrics?.efficiency || '+23.4%'}</div>
+                      <div className="text-sm text-slate-300">Eficiencia</div>
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 1.0 }}
+                      className="text-center p-6 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-2xl border border-purple-500/20"
+                    >
+                      <div className="text-2xl font-bold text-purple-400 mb-2">{results?.metrics?.timeSaved || '4.7 horas'}</div>
+                      <div className="text-sm text-slate-300">Tiempo Ahorrado</div>
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 1.1 }}
+                      className="text-center p-6 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 rounded-2xl border border-emerald-500/20"
+                    >
+                      <div className="text-2xl font-bold text-emerald-400 mb-2">{results?.metrics?.costSavings || '$45,200'}</div>
+                      <div className="text-sm text-slate-300">Ahorro Estimado</div>
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 1.2 }}
+                      className="text-center p-6 bg-gradient-to-br from-orange-500/10 to-red-500/10 rounded-2xl border border-orange-500/20"
+                    >
+                      <div className="text-2xl font-bold text-orange-400 mb-2">{results?.metrics?.riskReduction || '78%'}</div>
+                      <div className="text-sm text-slate-300">Reducción Riesgo</div>
+                    </motion.div>
+                  </React.Fragment>
+                ))}
+              </div>
+
+              {/* Insights y Recomendaciones */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Insights Clave */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1.3 }}
+                  className="p-6 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-2xl border border-blue-500/20"
+                >
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 bg-blue-500/20 rounded-full flex items-center justify-center">
+                      <Brain className="w-5 h-5 text-blue-400" />
+                    </div>
+                    <h4 className="text-xl font-bold text-white">Insights Clave</h4>
+                  </div>
+                  <div className="space-y-4">
+                    {Object.entries(alertResults).map(([alertType, results]: [string, any]) => 
+                      (results?.insights || []).map((insight: string, idx: number) => (
+                        <motion.div
+                          key={idx}
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 1.4 + idx * 0.1 }}
+                          className="flex items-start gap-3 p-3 bg-white/5 rounded-lg"
+                        >
+                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
+                          <span className="text-slate-300 text-sm">{insight}</span>
+                        </motion.div>
+                      ))
+                    )}
+                  </div>
+                </motion.div>
+
+                {/* Recomendaciones Estratégicas */}
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1.4 }}
+                  className="p-6 bg-gradient-to-br from-emerald-500/10 to-green-500/10 rounded-2xl border border-emerald-500/20"
+                >
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 bg-emerald-500/20 rounded-full flex items-center justify-center">
+                      <Target className="w-5 h-5 text-emerald-400" />
+                    </div>
+                    <h4 className="text-xl font-bold text-white">Recomendaciones Estratégicas</h4>
+                  </div>
+                  <div className="space-y-4">
+                    {Object.entries(alertResults).map(([alertType, results]: [string, any]) => 
+                      (results?.recommendations || []).map((recommendation: string, idx: number) => (
+                        <motion.div
+                          key={idx}
+                          initial={{ opacity: 0, x: 10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 1.5 + idx * 0.1 }}
+                          className="flex items-start gap-3 p-3 bg-white/5 rounded-lg"
+                        >
+                          <div className="w-2 h-2 bg-emerald-400 rounded-full mt-2 flex-shrink-0"></div>
+                          <span className="text-slate-300 text-sm">{recommendation}</span>
+                        </motion.div>
+                      ))
+                    )}
+                  </div>
+                </motion.div>
+              </div>
             </motion.div>
           )}
         </motion.div>
