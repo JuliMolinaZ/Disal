@@ -141,15 +141,30 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
         { time: '18:00', diferencias: 234, exactitud: 74.8, productos: 834 }
       ],
       heatmap: [
-        { zona: 'Almacén A', hora: '08:00', valor: 23, nivel: 'bajo' },
-        { zona: 'Almacén A', hora: '12:00', valor: 67, nivel: 'medio' },
-        { zona: 'Almacén A', hora: '16:00', valor: 89, nivel: 'alto' },
-        { zona: 'Almacén B', hora: '08:00', valor: 45, nivel: 'medio' },
-        { zona: 'Almacén B', hora: '12:00', valor: 78, nivel: 'alto' },
-        { zona: 'Almacén B', hora: '16:00', valor: 92, nivel: 'crítico' },
-        { zona: 'Almacén C', hora: '08:00', valor: 12, nivel: 'bajo' },
-        { zona: 'Almacén C', hora: '12:00', valor: 34, nivel: 'bajo' },
-        { zona: 'Almacén C', hora: '16:00', valor: 56, nivel: 'medio' }
+        // Zona de Ferretería - Mayor actividad por la mañana
+        { zona: 'FERRETERÍA', hora: '08:00', valor: 45, nivel: 'medio' },
+        { zona: 'FERRETERÍA', hora: '12:00', valor: 78, nivel: 'alto' },
+        { zona: 'FERRETERÍA', hora: '16:00', valor: 92, nivel: 'crítico' },
+        
+        // Zona Eléctrica - Pico al mediodía
+        { zona: 'ELÉCTRICO', hora: '08:00', valor: 23, nivel: 'bajo' },
+        { zona: 'ELÉCTRICO', hora: '12:00', valor: 89, nivel: 'alto' },
+        { zona: 'ELÉCTRICO', hora: '16:00', valor: 67, nivel: 'medio' },
+        
+        // Zona de Pinturas - Actividad constante
+        { zona: 'PINTURAS', hora: '08:00', valor: 34, nivel: 'bajo' },
+        { zona: 'PINTURAS', hora: '12:00', valor: 56, nivel: 'medio' },
+        { zona: 'PINTURAS', hora: '16:00', valor: 45, nivel: 'medio' },
+        
+        // Zona de Plomería - Menor actividad
+        { zona: 'PLOMERÍA', hora: '08:00', valor: 12, nivel: 'bajo' },
+        { zona: 'PLOMERÍA', hora: '12:00', valor: 28, nivel: 'bajo' },
+        { zona: 'PLOMERÍA', hora: '16:00', valor: 35, nivel: 'bajo' },
+        
+        // Zona de Construcción - Alta actividad vespertina
+        { zona: 'CONSTRUCCIÓN', hora: '08:00', valor: 18, nivel: 'bajo' },
+        { zona: 'CONSTRUCCIÓN', hora: '12:00', valor: 42, nivel: 'medio' },
+        { zona: 'CONSTRUCCIÓN', hora: '16:00', valor: 73, nivel: 'alto' }
       ],
       productosEspecificos: [
         { 
@@ -637,7 +652,7 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
 
     heatmap: {
       title: { 
-        text: 'MAPA DE CALOR INTELIGENTE - ANÁLISIS ESPACIAL', 
+        text: 'MAPA DE CALOR POR ZONAS DE ALMACÉN DISAL', 
         left: 'center', 
         textStyle: { color: '#e2e8f0', fontSize: 20, fontWeight: 'bold' } 
       },
@@ -651,7 +666,7 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
         formatter: function(params: any) {
           const [zonaIndex, horaIndex] = params.value;
           const valor = params.value[2];
-          const zonas = ['Almacén A', 'Almacén B', 'Almacén C'];
+          const zonas = ['CONSTRUCCIÓN', 'PLOMERÍA', 'PINTURAS', 'ELÉCTRICO', 'FERRETERÍA'];
           const horas = ['08:00', '12:00', '16:00'];
           const nivel = valor > 80 ? '🔴 Crítico' : valor > 60 ? '🟡 Alto' : valor > 30 ? '🟠 Medio' : '🟢 Bajo';
           
@@ -669,6 +684,9 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
               <span style="color: #94a3b8;">Nivel: </span>
               <span style="font-weight: bold;">${nivel}</span>
             </div>
+            <div style="margin: 8px 0; font-size: 12px; color: #94a3b8;">
+              Zona: ${zonas[zonaIndex]} | Hora: ${horas[horaIndex]}
+            </div>
           </div>`;
         },
         extraCssText: 'box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8); backdrop-filter: blur(16px);'
@@ -683,7 +701,7 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
       },
       yAxis: {
         type: 'category',
-        data: ['Almacén C', 'Almacén B', 'Almacén A'],
+        data: ['CONSTRUCCIÓN', 'PLOMERÍA', 'PINTURAS', 'ELÉCTRICO', 'FERRETERÍA'],
         splitArea: { show: true },
         axisLabel: { color: '#cbd5e1', fontSize: 12, fontWeight: '500' },
         axisLine: { lineStyle: { color: '#475569' } }
@@ -704,7 +722,10 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
         name: 'Diferencias por Zona-Hora',
         type: 'heatmap',
         data: csvData.heatmap.map((item, index) => {
-          const zonaIndex = item.zona === 'Almacén A' ? 2 : item.zona === 'Almacén B' ? 1 : 0;
+          const zonaIndex = item.zona === 'FERRETERÍA' ? 4 : 
+                           item.zona === 'ELÉCTRICO' ? 3 : 
+                           item.zona === 'PINTURAS' ? 2 : 
+                           item.zona === 'PLOMERÍA' ? 1 : 0; // CONSTRUCCIÓN
           const horaIndex = item.hora === '08:00' ? 0 : item.hora === '12:00' ? 1 : 2;
           return [horaIndex, zonaIndex, item.valor];
         }),
@@ -795,7 +816,7 @@ export function AnalisisCompleto({ data, specificData }: AnalisisCompletoProps) 
       name: 'Mapa de Calor', 
       icon: Gauge, 
       config: advancedChartConfigs.heatmap,
-      description: 'Visualización espacial'
+      description: 'Análisis por zonas de almacén DISAL'
     }
   ];
 
