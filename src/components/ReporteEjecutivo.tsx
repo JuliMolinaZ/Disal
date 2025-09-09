@@ -71,6 +71,213 @@ export function ReporteEjecutivo({ className = '' }: ReporteEjecutivoProps) {
         </div>
           </div>
 
+      {/* Información de Dirección y Fecha */}
+      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-8 rounded-3xl shadow-xl border-l-4 border-blue-500">
+        <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-100 mb-6 flex items-center">
+          <Calendar className="h-8 w-8 text-blue-600 dark:text-blue-400 mr-3" />
+          Información del Inventario
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-white/70 dark:bg-slate-800/70 p-6 rounded-2xl">
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-3 flex items-center">
+              <Target className="h-6 w-6 text-blue-600 dark:text-blue-400 mr-2" />
+              Dirección del Inventario
+            </h3>
+            <p className="text-slate-700 dark:text-slate-300">
+              <strong>Instalaciones DISAL</strong><br/>
+              Ubicación: [Dirección específica de las instalaciones]<br/>
+              Área de cobertura: Todas las zonas de almacén y bodegas
+            </p>
+          </div>
+          <div className="bg-white/70 dark:bg-slate-800/70 p-6 rounded-2xl">
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-3 flex items-center">
+              <Clock className="h-6 w-6 text-green-600 dark:text-green-400 mr-2" />
+              Fecha y Duración
+            </h3>
+            <p className="text-slate-700 dark:text-slate-300">
+              <strong>31 de Agosto 2024</strong><br/>
+              Duración: 2 días consecutivos<br/>
+              Horario: [Horario específico de trabajo]
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Análisis Global */}
+      <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-8 rounded-3xl shadow-xl border-l-4 border-green-500">
+        <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-100 mb-6 flex items-center">
+          <TrendingUp className="h-8 w-8 text-green-600 dark:text-green-400 mr-3" />
+          Análisis Global
+        </h2>
+        <div className="space-y-6">
+          <div className="bg-white/70 dark:bg-slate-800/70 p-6 rounded-2xl">
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4">Resumen Ejecutivo</h3>
+            <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+              El inventario global mostró un desempeño satisfactorio con una precisión promedio del 94.2%. 
+              Se identificaron áreas de mejora en la gestión de datos y estandarización de procesos que requieren 
+              atención inmediata para optimizar futuras operaciones.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-white/70 dark:bg-slate-800/70 p-4 rounded-xl text-center">
+              <div className="text-2xl font-bold text-green-600 dark:text-green-400">94.2%</div>
+              <div className="text-sm text-slate-600 dark:text-slate-300">Precisión Global</div>
+            </div>
+            <div className="bg-white/70 dark:bg-slate-800/70 p-4 rounded-xl text-center">
+              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">36</div>
+              <div className="text-sm text-slate-600 dark:text-slate-300">Personas Participantes</div>
+            </div>
+            <div className="bg-white/70 dark:bg-slate-800/70 p-4 rounded-xl text-center">
+              <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">12</div>
+              <div className="text-sm text-slate-600 dark:text-slate-300">Equipos de Trabajo</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Next Steps para Mejora Continua */}
+      <div className="bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 p-8 rounded-3xl shadow-xl border-l-4 border-orange-500">
+        <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-100 mb-6 flex items-center">
+          <CheckSquare className="h-8 w-8 text-orange-600 dark:text-orange-400 mr-3" />
+          Next Steps para Mejora Continua
+        </h2>
+        <div className="space-y-6">
+          <div className="bg-white/70 dark:bg-slate-800/70 p-6 rounded-2xl">
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4">Acciones Inmediatas</h3>
+            <ul className="space-y-3 text-slate-700 dark:text-slate-300">
+              <li className="flex items-start">
+                <CheckCircle className="h-5 w-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
+                <span><strong>Estandarización de Procesos:</strong> Implementar protocolos unificados para futuros inventarios</span>
+              </li>
+              <li className="flex items-start">
+                <CheckCircle className="h-5 w-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
+                <span><strong>Capacitación del Personal:</strong> Entrenamiento especializado en el uso de aplicaciones móviles</span>
+              </li>
+              <li className="flex items-start">
+                <CheckCircle className="h-5 w-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
+                <span><strong>Optimización de Apolo:</strong> Mejoras en la plataforma de gestión de inventarios</span>
+              </li>
+            </ul>
+          </div>
+          <div className="bg-white/70 dark:bg-slate-800/70 p-6 rounded-2xl">
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4">Responsables</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex items-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
+                <Users className="h-6 w-6 text-blue-600 dark:text-blue-400 mr-3" />
+                <div>
+                  <div className="font-semibold text-slate-800 dark:text-slate-100">Chris RUN 🇲🇽</div>
+                  <div className="text-sm text-slate-600 dark:text-slate-300">Coordinación General</div>
+                </div>
+              </div>
+              <div className="flex items-center p-4 bg-green-50 dark:bg-green-900/20 rounded-xl">
+                <Target className="h-6 w-6 text-green-600 dark:text-green-400 mr-3" />
+                <div>
+                  <div className="font-semibold text-slate-800 dark:text-slate-100">Equipo DISAL</div>
+                  <div className="text-sm text-slate-600 dark:text-slate-300">Implementación Local</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Señal Móvil de RED de las SIMS */}
+      <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 p-8 rounded-3xl shadow-xl border-l-4 border-purple-500">
+        <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-100 mb-6 flex items-center">
+          <Wifi className="h-8 w-8 text-purple-600 dark:text-purple-400 mr-3" />
+          Señal Móvil de RED de las SIMS
+        </h2>
+        <div className="space-y-6">
+          <div className="bg-white/70 dark:bg-slate-800/70 p-6 rounded-2xl">
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4">Análisis de Conectividad</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h4 className="font-semibold text-slate-800 dark:text-slate-100 mb-2">Problemas Identificados</h4>
+                <ul className="space-y-2 text-slate-700 dark:text-slate-300">
+                  <li className="flex items-start">
+                    <AlertCircle className="h-4 w-4 text-red-500 mr-2 mt-1 flex-shrink-0" />
+                    <span>Zonas con señal débil en áreas de almacén</span>
+                  </li>
+                  <li className="flex items-start">
+                    <AlertCircle className="h-4 w-4 text-red-500 mr-2 mt-1 flex-shrink-0" />
+                    <span>Interrupciones intermitentes en la transmisión de datos</span>
+                  </li>
+                  <li className="flex items-start">
+                    <AlertCircle className="h-4 w-4 text-red-500 mr-2 mt-1 flex-shrink-0" />
+                    <span>Lentitud en la sincronización de información</span>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-semibold text-slate-800 dark:text-slate-100 mb-2">Recomendaciones</h4>
+                <ul className="space-y-2 text-slate-700 dark:text-slate-300">
+                  <li className="flex items-start">
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2 mt-1 flex-shrink-0" />
+                    <span>Instalación de repetidores de señal en zonas críticas</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2 mt-1 flex-shrink-0" />
+                    <span>Optimización de la configuración de red</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2 mt-1 flex-shrink-0" />
+                    <span>Implementación de sistema de respaldo offline</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Cambio de Reporte IA por Análisis de DATOS */}
+      <div className="bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-900/20 dark:to-blue-900/20 p-8 rounded-3xl shadow-xl border-l-4 border-indigo-500">
+        <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-100 mb-6 flex items-center">
+          <Database className="h-8 w-8 text-indigo-600 dark:text-indigo-400 mr-3" />
+          Análisis de DATOS (Actualización de Reporte IA)
+        </h2>
+        <div className="space-y-6">
+          <div className="bg-white/70 dark:bg-slate-800/70 p-6 rounded-2xl">
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4">Transición Conceptual</h3>
+            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
+              Se ha actualizado la terminología de "Reporte IA" a "Análisis de DATOS" para reflejar con mayor precisión 
+              la naturaleza de los procesos implementados y las herramientas utilizadas en el inventario.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-xl">
+                <h4 className="font-semibold text-red-800 dark:text-red-200 mb-2">Antes: Reporte IA</h4>
+                <p className="text-sm text-red-700 dark:text-red-300">
+                  Terminología que no reflejaba la realidad de los procesos de análisis de datos implementados.
+                </p>
+              </div>
+              <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-xl">
+                <h4 className="font-semibold text-green-800 dark:text-green-200 mb-2">Ahora: Análisis de DATOS</h4>
+                <p className="text-sm text-green-700 dark:text-green-300">
+                  Descripción precisa de los procesos de análisis estadístico y procesamiento de información.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="bg-white/70 dark:bg-slate-800/70 p-6 rounded-2xl">
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4">Beneficios del Cambio</h3>
+            <ul className="space-y-3 text-slate-700 dark:text-slate-300">
+              <li className="flex items-start">
+                <CheckCircle className="h-5 w-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
+                <span>Mayor claridad en la comunicación de procesos</span>
+              </li>
+              <li className="flex items-start">
+                <CheckCircle className="h-5 w-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
+                <span>Alineación con las capacidades reales del sistema</span>
+              </li>
+              <li className="flex items-start">
+                <CheckCircle className="h-5 w-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
+                <span>Expectativas más realistas para futuros proyectos</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
       {/* Actividades Principales Realizadas */}
       <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-xl">
         <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-100 mb-8">Actividades Principales Realizadas</h2>
