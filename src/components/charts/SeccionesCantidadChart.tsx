@@ -20,7 +20,7 @@ export function SeccionesCantidadChart({ data, height = 500 }: SeccionesCantidad
     { primary: '#EC4899', secondary: '#DB2777', accent: '#F472B6' }
   ];
 
-  const total = data.reduce((sum, item) => sum + item.cantidad, 0);
+  // const total = data.reduce((sum, item) => sum + item.cantidad, 0);
 
   const option = {
     backgroundColor: 'transparent',
@@ -44,7 +44,7 @@ export function SeccionesCantidadChart({ data, height = 500 }: SeccionesCantidad
       shadowColor: 'rgba(0, 0, 0, 0.2)',
       shadowOffsetX: 0,
       shadowOffsetY: 6,
-      formatter: (params: any) => {
+      formatter: (params: { name: string; value: number; percent: number }) => {
         const { name, value, percent } = params;
         const item = data.find(d => d.seccion === name);
         const color = professionalColors[data.findIndex(d => d.seccion === name) % professionalColors.length];
@@ -110,7 +110,7 @@ export function SeccionesCantidadChart({ data, height = 500 }: SeccionesCantidad
         label: {
           show: true,
           position: 'outside',
-          formatter: (params: any) => {
+          formatter: (params: { name: string; percent: number }) => {
             return `${params.name}\n${params.percent}%`;
           },
           fontSize: 12,

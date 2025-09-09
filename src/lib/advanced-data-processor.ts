@@ -224,7 +224,7 @@ function calculateDistribution(values: number[]) {
   };
 }
 
-function calculateTableQuality(data: DataPoint[], total: number) {
+function calculateTableQuality(data: DataPoint[], _total: number) {
   // Completitud: % de datos no vacíos
   const completeness = data.length > 0 ? 100 : 0;
   

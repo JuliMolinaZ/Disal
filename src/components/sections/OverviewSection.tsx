@@ -5,13 +5,6 @@ import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { 
-  Users, 
-  MapPin, 
-  Clock, 
-  Database, 
-  Target, 
-  CheckCircle, 
-  AlertTriangle, 
   TrendingUp, 
   Activity,
   Sparkles,
