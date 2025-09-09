@@ -85,7 +85,7 @@ export function ReporteEjecutivo({ className = '' }: ReporteEjecutivoProps) {
             </h3>
             <p className="text-slate-700 dark:text-slate-300">
               <strong>Instalaciones DISAL</strong><br/>
-              Ubicación: [Dirección específica de las instalaciones]<br/>
+              Ubicación: Carretera a Sonsonate, km 28 ½, Cantón Lourdes, Colón, Departamento La Libertad, El Salvador<br/>
               Área de cobertura: Todas las zonas de almacén y bodegas
             </p>
           </div>
@@ -101,8 +101,8 @@ export function ReporteEjecutivo({ className = '' }: ReporteEjecutivoProps) {
             </p>
           </div>
         </div>
-      </div>
-
+        </div>
+        
       {/* Análisis Global */}
       <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-8 rounded-3xl shadow-xl border-l-4 border-green-500">
         <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-100 mb-6 flex items-center">
@@ -276,7 +276,7 @@ export function ReporteEjecutivo({ className = '' }: ReporteEjecutivoProps) {
             </ul>
           </div>
         </div>
-      </div>
+          </div>
 
       {/* Actividades Principales Realizadas */}
       <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-xl">
@@ -427,7 +427,7 @@ export function ReporteEjecutivo({ className = '' }: ReporteEjecutivoProps) {
           <p>
             Sin embargo, se presentaron retrasos significativos debido a diversos inconvenientes técnicos que afectaron la fluidez del proceso y requirieron intervenciones correctivas durante la ejecución.
           </p>
-        </div>
+            </div>
           </div>
 
       {/* Inconvenientes Técnicos Identificados */}
